@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - Élections Mutuelle des Douanes</title>
+    <style>
+        :root {
+            --primary-color: #1a5a96;
+            --secondary-color: #144272;
+            --accent-color: #0077cc;
+            --light-blue: #e6f2ff;
+            --dark-blue: #0a2d5a;
+            --orange: #FF6B00;
+            --error-color: #d9534f;
+            --success-color: #5cb85c;
+            --warning-color: #f0ad4e;
+            --info-color: #5bc0de;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f5f9ff;
+        }
+        
+        .header-container {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-section h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .logo-section span {
+            font-size: 18px;
+            margin-left: 10px;
+            opacity: 0.9;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+        
+        nav ul li a:hover {
+            opacity: 0.8;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-blue));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .hero-section h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        
+        .hero-section p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+        
+        .admin-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .admin-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: var(--light-blue);
+        }
+        
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        
+        .alert-info {
+            background-color: #e7f4ff;
+            border-left: 4px solid var(--info-color);
+        }
+        
+        .alert-warning {
+            background-color: #fcf8e3;
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        button.secondary {
+            background-color: #6c757d;
+        }
+        
+        button.danger {
+            background-color: var(--error-color);
+        }
+        
+        button.orange {
+            background-color: var(--orange);
+        }
+        
+        button.success {
+            background-color: var(--success-color);
+        }
+        
+        button.info {
+            background-color: var(--info-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input[type="text"],
+        input[type="password"],
+        input[type="number"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .action-buttons {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .delegates-section {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        
+        .delegate-category {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #e8f4f8;
+            border-radius: 5px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 5px;
+        }
+        
+        .pagination button {
+            min-width: 30px;
+        }
+        
+        .pagination button.active {
+            background-color: var(--secondary-color);
+        }
+        
+        .features-section {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+        
+        .feature-box {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            width: 18%;
+            min-width: 200px;
+            margin: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 4px solid var(--accent-color);
+        }
+        
+        .feature-box h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 28px;
+        }
+        
+        .feature-box p {
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            cursor: pointer;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+        
+        .tab.active {
+            background: white;
+            border-bottom: 1px solid white;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            button {
+                width: 100%;
+                margin-right: 0;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .feature-box {
+                width: 100%;
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="header-container">
+        <div class="logo-section">
+            <h1>Mutuelle des Douanes <span>Élections 2025</span></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#">Procédure</a></li>
+                <li><a href="#">Résultats</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+    
+    <div class="hero-section">
+        <h2>Administration des élections des délégués</h2>
+        <p>Ensemble pour une élection transparente et démocratique</p>
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+            <div style="display: flex; align-items: center;">
+                <span style="margin-right: 10px;">◆</span> Processus sécurisé
+            </div>
+            <div style="display: flex; align-items: center;">
+                <span style="margin-right: 10px;">◆</span> Résultats en temps réel
+            </div>
+        </div>
+    </div>
+    
+    <div class="admin-container">
+        <div class="header">
+            <div>
+                <h1>Tableau de bord Administrateur</h1>
+            </div>
+            <button id="logoutButton" class="secondary hidden">Déconnexion</button>
+        </div>
+        
+        <div class="alert alert-warning">
+            <strong>Accès restreint :</strong> Cette interface est réservée aux administrateurs du processus électoral.
+        </div>
+        
+        <div id="loginSection">
+            <div class="admin-section">
+                <h2>Connexion Administrateur</h2>
+                <div class="form-group">
+                    <label for="adminPassword">Mot de passe administrateur</label>
+                    <input type="password" id="adminPassword" placeholder="Entrez le mot de passe administrateur">
+                </div>
+                <button id="loginAdminButton" class="orange">Se connecter</button>
+                <div id="adminLoginMessage" style="margin-top: 15px;"></div>
+            </div>
+        </div>
+        
+        <div id="adminPanel" class="hidden">
+            <!-- Statistiques principales -->
+            <div class="features-section">
+                <div class="feature-box">
+                    <h3 id="totalParticipants">0</h3>
+                    <p>Inscrits total</p>
+                </div>
+                <div class="feature-box">
+                    <h3 id="totalTempVoters">0</h3>
+                    <p>Votants non inscrits</p>
+                </div>
+                <div class="feature-box">
+                    <h3 id="totalCandidates">0</h3>
+                    <p>Candidats</p>
+                </div>
+                <div class="feature-box">
+                    <h3 id="totalVotes">0</h3>
+                    <p>Votes exprimés</p>
+                </div>
+                <div class="feature-box">
+                    <h3 id="totalDelegates">0</h3>
+                    <p>Délégués à élire</p>
+                </div>
+            </div>
+            
+            <!-- Section Gestion des Dates -->
+            <div class="admin-section">
+                <h2>Gestion des Dates</h2>
+                <div class="form-group">
+                    <label for="inscriptionStart">Date d'ouverture des inscriptions</label>
+                    <input type="date" id="inscriptionStart">
+                </div>
+                <div class="form-group">
+                    <label for="inscriptionEnd">Date de fermeture des inscriptions</label>
+                    <input type="date" id="inscriptionEnd">
+                </div>
+                <div class="form-group">
+                    <label for="votingDate">Date du vote</label>
+                    <input type="date" id="votingDate">
+                </div>
+                <button id="saveDatesButton" class="success">Enregistrer les dates</button>
+                <div id="datesMessage" style="margin-top: 15px;"></div>
+            </div>
+            
+            <!-- Section Gestion des Utilisateurs avec onglets -->
+            <div class="admin-section">
+                <h2>Gestion des Utilisateurs</h2>
+                
+                <div class="tabs">
+                    <div class="tab active" data-tab="inscrit">Inscrits (Membres)</div>
+                    <div class="tab" data-tab="temporaire">Votants non inscrits</div>
+                </div>
+                
+                <!-- Onglet Inscrits -->
+                <div id="inscrit" class="tab-content active">
+                    <div class="alert alert-info">
+                        <p>Total des inscrits : <strong id="totalParticipantsCount">0</strong></p>
+                        <p id="newRegistrationAlert" style="display: none; color: var(--success-color); font-weight: bold;"></p>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button id="exportParticipantsButton" class="info">Exporter en CSV</button>
+                        <button id="importParticipantsButton" class="info">Importer depuis Excel/CSV</button>
+                        <input type="file" id="fileImport" accept=".csv,.xlsx,.xls" class="hidden">
+                        <button id="refreshParticipantsButton" class="info">Actualiser la liste</button>
+                    </div>
+                    
+                    <table id="participantsTable">
+                        <thead>
+                            <tr>
+                                <th>Date Inscription</th>
+                                <th>Grade</th>
+                                <th>Prénom</th>
+                                <th>Nom</th>
+                                <th>Téléphone</th>
+                                <th>Matricule</th>
+                                <th>Candidat</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="participantsList"></tbody>
+                    </table>
+                    
+                    <div id="paginationContainer" class="pagination"></div>
+                </div>
+                
+                <!-- Onglet Votants temporaires -->
+                <div id="temporaire" class="tab-content">
+                    <div class="alert alert-info">
+                        <p>Total des votants non inscrits : <strong id="totalTempVotersCount">0</strong></p>
+                        <p><em>Ces utilisateurs peuvent voter mais ne sont pas membres inscrits</em></p>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button id="exportTempVotersButton" class="info">Exporter en CSV</button>
+                        <button id="refreshTempVotersButton" class="info">Actualiser la liste</button>
+                        <button id="convertTempVotersButton" class="success">Convertir en membres</button>
+                    </div>
+                    
+                    <table id="tempVotersTable">
+                        <thead>
+                            <tr>
+                                <th>Date Connexion</th>
+                                <th>Grade</th>
+                                <th>Prénom</th>
+                                <th>Nom</th>
+                                <th>Téléphone</th>
+                                <th>Matricule</th>
+                                <th>A voté</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tempVotersList"></tbody>
+                    </table>
+                    
+                    <div id="tempVotersPaginationContainer" class="pagination"></div>
+                </div>
+            </div>
+            
+            <!-- Section Résultats des Votes -->
+            <div class="admin-section">
+                <h2>Résultats des Votes</h2>
+                <div class="action-buttons">
+                    <button id="countVotesButton" class="success">Dépouiller les votes</button>
+                    <button id="viewResultsButton" class="info">Voir les résultats</button>
+                    <button id="saveCandidatesButton" class="success">Enregistrer les candidats</button>
+                </div>
+                
+                <div id="resultsContainer" class="hidden"></div>
+            </div>
+            
+            <!-- Section Désignation des Délégués -->
+            <div class="admin-section">
+                <h2>Désignation des Délégués</h2>
+                <div class="form-group">
+                    <label for="inspecteurDelegates">Nombre de délégués Inspecteurs</label>
+                    <input type="number" id="inspecteurDelegates" value="10" min="1">
+                </div>
+                <div class="form-group">
+                    <label for="controleurDelegates">Nombre de délégués Contrôleurs/Sous-Officiers</label>
+                    <input type="number" id="controleurDelegates" value="20" min="1">
+                </div>
+                <div class="form-group">
+                    <label for="agentDelegates">Nombre de délégués Agents</label>
+                    <input type="number" id="agentDelegates" value="20" min="1">
+                </div>
+                <div class="form-group">
+                    <label for="preposeDelegates">Nombre de délégués Préposés</label>
+                    <input type="number" id="preposeDelegates" value="40" min="1">
+                </div>
+                <div class="form-group">
+                    <label for="retraiteDelegates">Nombre de délégués Retraités</label>
+                    <input type="number" id="retraiteDelegates" value="6" min="1">
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="selectDelegatesButton" class="success">Sélectionner les délégués</button>
+                    <button id="viewDelegatesButton" class="info">Voir la liste des délégués</button>
+                </div>
+                
+                <div id="delegatesListContainer" class="hidden"></div>
+            </div>
+            
+            <!-- Section Actions Administratives -->
+            <div class="admin-section">
+                <h2>Actions Administratives</h2>
+                <div class="action-buttons">
+                    <button id="viewCandidatesButton" class="info">Voir la liste des candidats</button>
+                    <button id="viewHistoryButton" class="info">Historique des élections</button>
+                    <button id="resetSystemButton" class="danger">Réinitialiser le système</button>
+                </div>
+                
+                <div id="candidatesContainer" class="hidden">
+                    <div id="candidatesContent"></div>
+                    <div id="candidatesPagination" class="pagination"></div>
+                </div>
+                <div id="historyContainer" class="hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const ADMIN_PASSWORD = "admin123";
+        const GRADE_MAPPING = {
+            inspecteur: "Inspecteur",
+            controleur_sous_officier: "Contrôleur/Sous-Officier",
+            agent_constatation_brevete: "Agent de Constatation/Agent Breveté",
+            prepose: "Préposé",
+            retraite: "Retraité"
+        };
+        
+        // Données
+        let participants = [];
+        let tempVoters = [];
+        let votes = {};
+        let electionResults = null;
+        let finalDelegates = {
+            inspecteur: [],
+            controleur_sous_officier: [],
+            agent_constatation_brevete: [],
+            prepose: [],
+            retraite: []
+        };
+        let currentPage = 1;
+        let currentTempVotersPage = 1;
+        let currentCandidatesPage = 1;
+        const itemsPerPage = 10;
+        let lastParticipantsCount = 0;
+        let lastTempVotersCount = 0;
+        
+        // Variables pour stocker les données en mémoire (remplace localStorage)
+        let inMemoryData = {
+            electionParticipants: [],
+            tempVoters: [],
+            electionVotes: {},
+            electionResults: null,
+            electionFinalDelegates: {
+                inspecteur: [],
+                controleur_sous_officier: [],
+                agent_constatation_brevete: [],
+                prepose: [],
+                retraite: []
+            },
+            electionDates: {}
+        };
+        
+        // Fonctions pour simuler localStorage
+        function setItem(key, value) {
+            inMemoryData[key] = JSON.parse(JSON.stringify(value));
+        }
+        
+        function getItem(key) {
+            return inMemoryData[key] ? JSON.parse(JSON.stringify(inMemoryData[key])) : null;
+        }
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeData();
+            setupEventListeners();
+            displayParticipants();
+            displayTempVoters();
+            
+            // Vérifier périodiquement les nouvelles inscriptions et votants
+            setInterval(checkForNewData, 5000);
+        });
+
+        function initializeData() {
+            // Charger les participants
+            const storedParticipants = getItem('electionParticipants');
+            if (!storedParticipants || storedParticipants.length === 0) {
+                participants = [
+                    {Timestamp: "5/13/2025 14:51:43", Grade: "Préposé", prenom: "Abdou raby", Nom: "Raby", numero: "772083917", matricule: "727854E", Candidat: "Oui"},
+                    {Timestamp: "5/16/2025 13:35:50", Grade: "Agent de Constatation/Agent Breveté", prenom: "Fatou Bintou", Nom: "Samb", numero: "781697426", matricule: "679895D", Candidat: "Non"}
+                ];
+                setItem('electionParticipants', participants);
+            } else {
+                participants = storedParticipants;
+            }
+            lastParticipantsCount = participants.length;
+
+            // Charger les votants temporaires
+            tempVoters = getItem('tempVoters') || [];
+            lastTempVotersCount = tempVoters.length;
+
+            // Charger les autres données
+            votes = getItem('electionVotes') || {};
+            electionResults = getItem('electionResults');
+            finalDelegates = getItem('electionFinalDelegates') || {
+                inspecteur: [],
+                controleur_sous_officier: [],
+                agent_constatation_brevete: [],
+                prepose: [],
+                retraite: []
+            };
+
+            // Charger les dates
+            const dates = getItem('electionDates') || {};
+            document.getElementById('inscriptionStart').value = dates.inscriptionStart || '';
+            document.getElementById('inscriptionEnd').value = dates.inscriptionEnd || '';
+            document.getElementById('votingDate').value = dates.votingDate || '';
+            
+            updateStats();
+        }
+        
+        function updateStats() {
+            document.getElementById('totalParticipants').textContent = participants.length;
+            document.getElementById('totalParticipantsCount').textContent = participants.length;
+            
+            document.getElementById('totalTempVoters').textContent = tempVoters.length;
+            document.getElementById('totalTempVotersCount').textContent = tempVoters.length;
+            
+            const candidatesCount = participants.filter(p => p.Candidat === 'Oui' || p.isCandidat === true).length;
+            document.getElementById('totalCandidates').textContent = candidatesCount;
+            
+            document.getElementById('totalVotes').textContent = Object.keys(votes).length;
+            
+            const totalDelegates = 
+                parseInt(document.getElementById('inspecteurDelegates').value || 0) +
+                parseInt(document.getElementById('controleurDelegates').value || 0) +
+                parseInt(document.getElementById('agentDelegates').value || 0) +
+                parseInt(document.getElementById('preposeDelegates').value || 0) +
+                parseInt(document.getElementById('retraiteDelegates').value || 0);
+            document.getElementById('totalDelegates').textContent = totalDelegates;
+        }
+        
+        function setupEventListeners() {
+            // Authentification
+            document.getElementById('loginAdminButton').addEventListener('click', loginAdmin);
+            document.getElementById('logoutButton').addEventListener('click', logoutAdmin);
+            
+            // Gestion des onglets
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    switchTab(tabId);
+                });
+            });
+            
+            // Dates
+            document.getElementById('saveDatesButton').addEventListener('click', saveDates);
+            
+            // Participants
+            document.getElementById('exportParticipantsButton').addEventListener('click', exportParticipants);
+            document.getElementById('importParticipantsButton').addEventListener('click', () => document.getElementById('fileImport').click());
+            document.getElementById('fileImport').addEventListener('change', importParticipants);
+            document.getElementById('refreshParticipantsButton').addEventListener('click', refreshParticipants);
+            
+            // Votants temporaires
+            document.getElementById('exportTempVotersButton').addEventListener('click', exportTempVoters);
+            document.getElementById('refreshTempVotersButton').addEventListener('click', refreshTempVoters);
+            document.getElementById('convertTempVotersButton').addEventListener('click', convertTempVoters);
+            
+            // Votes et résultats
+            document.getElementById('countVotesButton').addEventListener('click', countVotes);
+            document.getElementById('viewResultsButton').addEventListener('click', viewResults);
+            document.getElementById('saveCandidatesButton').addEventListener('click', saveElectionCandidates);
+            
+            // Délégués
+            document.getElementById('selectDelegatesButton').addEventListener('click', selectDelegates);
+            document.getElementById('viewDelegatesButton').addEventListener('click', viewDelegates);
+            
+            // Actions admin
+            document.getElementById('viewCandidatesButton').addEventListener('click', viewCandidates);
+            document.getElementById('viewHistoryButton').addEventListener('click', viewHistory);
+            document.getElementById('resetSystemButton').addEventListener('click', resetSystem);
+            
+            // Écouteurs pour les stats
+            document.getElementById('inspecteurDelegates').addEventListener('change', updateStats);
+            document.getElementById('controleurDelegates').addEventListener('change', updateStats);
+            document.getElementById('agentDelegates').addEventListener('change', updateStats);
+            document.getElementById('preposeDelegates').addEventListener('change', updateStats);
+            document.getElementById('retraiteDelegates').addEventListener('change', updateStats);
+        }
+        
+        function switchTab(tabId) {
+            // Désactiver tous les onglets
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Activer l'onglet sélectionné
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+        
+        function checkForNewData() {
+            // Vérifier les nouveaux participants
+            const currentParticipantsCount = participants.length;
+            const storedParticipants = getItem('electionParticipants') || [];
+            
+            if (storedParticipants.length > currentParticipantsCount) {
+                participants = storedParticipants;
+                const newRegistrations = storedParticipants.length - lastParticipantsCount;
+                lastParticipantsCount = storedParticipants.length;
+                
+                const alertEl = document.getElementById('newRegistrationAlert');
+                alertEl.textContent = `${newRegistrations} nouveau(x) inscrit(s) détecté(s)`;
+                alertEl.style.display = 'block';
+                
+                displayParticipants(currentPage);
+                updateStats();
+                
+                setTimeout(() => {
+                    alertEl.style.display = 'none';
+                }, 5000);
+            }
+            
+            // Vérifier les nouveaux votants temporaires
+            const storedTempVoters = getItem('tempVoters') || [];
+            if (storedTempVoters.length > tempVoters.length) {
+                tempVoters = storedTempVoters;
+                displayTempVoters(currentTempVotersPage);
+                updateStats();
+            }
+        }
+        
+        // Fonctions d'authentification
+        function loginAdmin() {
+            const password = document.getElementById('adminPassword').value;
+            const messageEl = document.getElementById('adminLoginMessage');
+            
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('adminPanel').classList.remove('hidden');
+                document.getElementById('logoutButton').classList.remove('hidden');
+                messageEl.innerHTML = '<div style="color: var(--success-color); font-weight: bold;">Connexion réussie !</div>';
+                updateStats();
+            } else {
+                messageEl.innerHTML = '<div style="color: var(--error-color); font-weight: bold;">Mot de passe incorrect !</div>';
+            }
+            
+            document.getElementById('adminPassword').value = '';
+        }
+        
+        function logoutAdmin() {
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('adminPanel').classList.add('hidden');
+            document.getElementById('logoutButton').classList.add('hidden');
+            document.getElementById('adminLoginMessage').innerHTML = '';
+        }
+        
+        // Gestion des dates
+        function saveDates() {
+            const dates = {
+                inscriptionStart: document.getElementById('inscriptionStart').value,
+                inscriptionEnd: document.getElementById('inscriptionEnd').value,
+                votingDate: document.getElementById('votingDate').value
+            };
+            
+            setItem('electionDates', dates);
+            
+            document.getElementById('datesMessage').innerHTML = 
+                '<div style="color: var(--success-color); font-weight: bold;">Dates enregistrées avec succès !</div>';
+            
+            setTimeout(() => {
+                document.getElementById('datesMessage').innerHTML = '';
+            }, 3000);
+        }
+        
+        // Affichage des participants
+        function displayParticipants(page = 1) {
+            currentPage = page;
+            const tbody = document.getElementById('participantsList');
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageParticipants = participants.slice(startIndex, endIndex);
+            
+            tbody.innerHTML = '';
+            
+            pageParticipants.forEach((participant, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${formatDate(participant.Timestamp)}</td>
+                    <td>${participant.Grade}</td>
+                    <td>${participant.prenom}</td>
+                    <td>${participant.Nom}</td>
+                    <td>${participant.numero}</td>
+                    <td>${participant.matricule}</td>
+                    <td><span style="color: ${participant.Candidat === 'Oui' ? 'var(--success-color)' : 'var(--error-color)'}; font-weight: bold;">${participant.Candidat}</span></td>
+                    <td>
+                        <button onclick="deleteParticipant(${startIndex + index})" class="danger" style="padding: 5px 10px; font-size: 12px;">Supprimer</button>
+                        <button onclick="toggleCandidate(${startIndex + index})" class="info" style="padding: 5px 10px; font-size: 12px;">
+                            ${participant.Candidat === 'Oui' ? 'Retirer candidature' : 'Candidater'}
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            createPagination('paginationContainer', participants.length, page, displayParticipants);
+        }
+        
+        // Affichage des votants temporaires
+        function displayTempVoters(page = 1) {
+            currentTempVotersPage = page;
+            const tbody = document.getElementById('tempVotersList');
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageTempVoters = tempVoters.slice(startIndex, endIndex);
+            
+            tbody.innerHTML = '';
+            
+            pageTempVoters.forEach((voter, index) => {
+                const hasVoted = votes[voter.matricule] ? 'Oui' : 'Non';
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${formatDate(voter.timestamp)}</td>
+                    <td>${voter.grade}</td>
+                    <td>${voter.prenom}</td>
+                    <td>${voter.nom}</td>
+                    <td>${voter.numero}</td>
+                    <td>${voter.matricule}</td>
+                    <td><span style="color: ${hasVoted === 'Oui' ? 'var(--success-color)' : 'var(--warning-color)'}; font-weight: bold;">${hasVoted}</span></td>
+                    <td>
+                        <button onclick="deleteTempVoter(${startIndex + index})" class="danger" style="padding: 5px 10px; font-size: 12px;">Supprimer</button>
+                        <button onclick="convertSingleTempVoter(${startIndex + index})" class="success" style="padding: 5px 10px; font-size: 12px;">Convertir</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            createPagination('tempVotersPaginationContainer', tempVoters.length, page, displayTempVoters);
+        }
+        
+        // Création de la pagination
+        function createPagination(containerId, totalItems, currentPage, callback) {
+            const container = document.getElementById(containerId);
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            
+            container.innerHTML = '';
+            
+            if (totalPages <= 1) return;
+            
+            // Bouton précédent
+            if (currentPage > 1) {
+                const prevBtn = document.createElement('button');
+                prevBtn.textContent = '‹';
+                prevBtn.onclick = () => callback(currentPage - 1);
+                container.appendChild(prevBtn);
+            }
+            
+            // Numéros de pages
+            const startPage = Math.max(1, currentPage - 2);
+            const endPage = Math.min(totalPages, currentPage + 2);
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.textContent = i;
+                if (i === currentPage) pageBtn.classList.add('active');
+                pageBtn.onclick = () => callback(i);
+                container.appendChild(pageBtn);
+            }
+            
+            // Bouton suivant
+            if (currentPage < totalPages) {
+                const nextBtn = document.createElement('button');
+                nextBtn.textContent = '›';
+                nextBtn.onclick = () => callback(currentPage + 1);
+                container.appendChild(nextBtn);
+            }
+        }
+        
+        // Utilitaires
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('fr-FR') + ' ' + date.toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'});
+        }
+        
+        // Gestion des participants
+        function deleteParticipant(index) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce participant ?')) {
+                participants.splice(index, 1);
+                setItem('electionParticipants', participants);
+                displayParticipants(currentPage);
+                updateStats();
+            }
+        }
+        
+        function toggleCandidate(index) {
+            participants[index].Candidat = participants[index].Candidat === 'Oui' ? 'Non' : 'Oui';
+            participants[index].isCandidat = participants[index].Candidat === 'Oui';
+            setItem('electionParticipants', participants);
+            displayParticipants(currentPage);
+            updateStats();
+        }
+        
+        function deleteTempVoter(index) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce votant temporaire ?')) {
+                tempVoters.splice(index, 1);
+                setItem('tempVoters', tempVoters);
+                displayTempVoters(currentTempVotersPage);
+                updateStats();
+            }
+        }
+        
+        function convertSingleTempVoter(index) {
+            const voter = tempVoters[index];
+            const newParticipant = {
+                Timestamp: new Date().toLocaleString(),
+                Grade: voter.grade,
+                prenom: voter.prenom,
+                Nom: voter.nom,
+                numero: voter.numero,
+                matricule: voter.matricule,
+                Candidat: 'Non',
+                isCandidat: false,
+                convertedFromTemp: true
+            };
+            
+            participants.push(newParticipant);
+            tempVoters.splice(index, 1);
+            
+            setItem('electionParticipants', participants);
+            setItem('tempVoters', tempVoters);
+            
+            displayParticipants();
+            displayTempVoters(currentTempVotersPage);
+            updateStats();
+            
+            alert('Votant converti en membre inscrit avec succès !');
+        }
+        
+        function convertTempVoters() {
+            if (tempVoters.length === 0) {
+                alert('Aucun votant temporaire à convertir.');
+                return;
+            }
+            
+            if (confirm(`Convertir tous les ${tempVoters.length} votants temporaires en membres inscrits ?`)) {
+                tempVoters.forEach(voter => {
+                    const newParticipant = {
+                        Timestamp: new Date().toLocaleString(),
+                        Grade: voter.grade,
+                        prenom: voter.prenom,
+                        Nom: voter.nom,
+                        numero: voter.numero,
+                        matricule: voter.matricule,
+                        Candidat: 'Non',
+                        isCandidat: false,
+                        convertedFromTemp: true
+                    };
+                    participants.push(newParticipant);
+                });
+                
+                tempVoters = [];
+                
+                setItem('electionParticipants', participants);
+                setItem('tempVoters', tempVoters);
+                
+                displayParticipants();
+                displayTempVoters();
+                updateStats();
+                
+                alert('Tous les votants temporaires ont été convertis en membres inscrits !');
+            }
+        }
+        
+        // Fonctions de rafraîchissement
+        function refreshParticipants() {
+            initializeData();
+            displayParticipants(currentPage);
+            alert('Liste des participants actualisée !');
+        }
+        
+        function refreshTempVoters() {
+            tempVoters = getItem('tempVoters') || [];
+            displayTempVoters(currentTempVotersPage);
+            updateStats();
+            alert('Liste des votants temporaires actualisée !');
+        }
+        
+        // Export CSV
+        function exportParticipants() {
+            const headers = ['Date Inscription', 'Grade', 'Prénom', 'Nom', 'Téléphone', 'Matricule', 'Candidat'];
+            const csvContent = [headers.join(',')];
+            
+            participants.forEach(p => {
+                const row = [
+                    formatDate(p.Timestamp),
+                    p.Grade,
+                    p.prenom,
+                    p.Nom,
+                    p.numero,
+                    p.matricule,
+                    p.Candidat
+                ];
+                csvContent.push(row.join(','));
+            });
+            
+            downloadCSV(csvContent.join('\n'), 'participants_election.csv');
+        }
+        
+        function exportTempVoters() {
+            const headers = ['Date Connexion', 'Grade', 'Prénom', 'Nom', 'Téléphone', 'Matricule', 'A voté'];
+            const csvContent = [headers.join(',')];
+            
+            tempVoters.forEach(v => {
+                const hasVoted = votes[v.matricule] ? 'Oui' : 'Non';
+                const row = [
+                    formatDate(v.timestamp),
+                    v.grade,
+                    v.prenom,
+                    v.nom,
+                    v.numero,
+                    v.matricule,
+                    hasVoted
+                ];
+                csvContent.push(row.join(','));
+            });
+            
+            downloadCSV(csvContent.join('\n'), 'votants_temporaires.csv');
+        }
+        
+        function downloadCSV(content, filename) {
+            const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            if (link.download !== undefined) {
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+        
+        // Import Excel/CSV
+        function importParticipants(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    let data;
+                    if (file.name.endsWith('.csv')) {
+                        data = parseCSV(e.target.result);
+                    } else {
+                        const workbook = XLSX.read(e.target.result, { type: 'binary' });
+                        const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                        data = XLSX.utils.sheet_to_json(firstSheet);
+                    }
+                    
+                    // Traiter les données importées
+                    const importedCount = processImportedData(data);
+                    alert(`${importedCount} participants importés avec succès !`);
+                    
+                    displayParticipants();
+                    updateStats();
+                } catch (error) {
+                    alert('Erreur lors de l\'importation : ' + error.message);
+                }
+            };
+            
+            if (file.name.endsWith('.csv')) {
+                reader.readAsText(file);
+            } else {
+                reader.readAsBinaryString(file);
+            }
+            
+            event.target.value = '';
+        }
+        
+        function parseCSV(text) {
+            const lines = text.split('\n');
+            const headers = lines[0].split(',').map(h => h.trim());
+            const data = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                if (lines[i].trim()) {
+                    const values = lines[i].split(',').map(v => v.trim());
+                    const obj = {};
+                    headers.forEach((header, index) => {
+                        obj[header] = values[index] || '';
+                    });
+                    data.push(obj);
+                }
+            }
+            
+            return data;
+        }
+        
+        function processImportedData(data) {
+            let importedCount = 0;
+            
+            data.forEach(row => {
+                // Vérifier si le participant existe déjà
+                const exists = participants.some(p => 
+                    p.matricule === row.matricule || 
+                    (p.prenom === row.prenom && p.Nom === row.Nom)
+                );
+                
+                if (!exists) {
+                    const newParticipant = {
+                        Timestamp: new Date().toLocaleString(),
+                        Grade: row.Grade || row.grade || '',
+                        prenom: row.prenom || row.Prénom || '',
+                        Nom: row.Nom || row.nom || '',
+                        numero: row.numero || row.Téléphone || row.telephone || '',
+                        matricule: row.matricule || row.Matricule || '',
+                        Candidat: row.Candidat || row.candidat || 'Non',
+                        isCandidat: (row.Candidat || row.candidat) === 'Oui',
+                        imported: true
+                    };
+                    
+                    participants.push(newParticipant);
+                    importedCount++;
+                }
+            });
+            
+            setItem('electionParticipants', participants);
+            return importedCount;
+        }
+        
+        // Dépouillement des votes
+        function countVotes() {
+            const votesCounts = {};
+            const gradeVotes = {};
+            
+            // Initialiser les compteurs par grade
+            Object.keys(GRADE_MAPPING).forEach(grade => {
+                gradeVotes[grade] = {};
+            });
+            
+            // Compter les votes
+            Object.values(votes).forEach(vote => {
+                const voterGrade = getGradeKey(vote.voterGrade);
+                
+                if (!gradeVotes[voterGrade]) {
+                    gradeVotes[voterGrade] = {};
+                }
+                
+                vote.candidates.forEach(candidateId => {
+                    if (!votesCounts[candidateId]) {
+                        votesCounts[candidateId] = 0;
+                    }
+                    if (!gradeVotes[voterGrade][candidateId]) {
+                        gradeVotes[voterGrade][candidateId] = 0;
+                    }
+                    
+                    votesCounts[candidateId]++;
+                    gradeVotes[voterGrade][candidateId]++;
+                });
+            });
+            
+            electionResults = {
+                totalVotes: Object.keys(votes).length,
+                votesCounts: votesCounts,
+                gradeVotes: gradeVotes,
+                timestamp: new Date().toISOString()
+            };
+            
+            setItem('electionResults', electionResults);
+            
+            alert('Dépouillement terminé ! Cliquez sur "Voir les résultats" pour consulter les résultats.');
+            updateStats();
+        }
+        
+        function viewResults() {
+            if (!electionResults) {
+                alert('Aucun résultat disponible. Veuillez d\'abord dépouiller les votes.');
+                return;
+            }
+            
+            const container = document.getElementById('resultsContainer');
+            container.classList.remove('hidden');
+            
+            let html = '<h3>Résultats des Élections</h3>';
+            html += `<p><strong>Total des votes exprimés :</strong> ${electionResults.totalVotes}</p>`;
+            
+            // Résultats généraux
+            html += '<h4>Résultats généraux</h4>';
+            html += '<table><thead><tr><th>Candidat</th><th>Votes</th><th>Pourcentage</th></tr></thead><tbody>';
+            
+            const sortedCandidates = Object.entries(electionResults.votesCounts)
+                .sort(([,a], [,b]) => b - a);
+            
+            sortedCandidates.forEach(([candidateId, votes]) => {
+                const candidate = participants.find(p => p.matricule === candidateId);
+                const percentage = ((votes / electionResults.totalVotes) * 100).toFixed(2);
+                
+                if (candidate) {
+                    html += `<tr>
+                        <td>${candidate.prenom} ${candidate.Nom} (${candidate.Grade})</td>
+                        <td>${votes}</td>
+                        <td>${percentage}%</td>
+                    </tr>`;
+                }
+            });
+            
+            html += '</tbody></table>';
+            
+            // Résultats par grade
+            html += '<h4>Résultats par grade</h4>';
+            Object.entries(GRADE_MAPPING).forEach(([gradeKey, gradeName]) => {
+                if (electionResults.gradeVotes[gradeKey] && Object.keys(electionResults.gradeVotes[gradeKey]).length > 0) {
+                    html += `<h5>${gradeName}</h5>`;
+                    html += '<table><thead><tr><th>Candidat</th><th>Votes</th></tr></thead><tbody>';
+                    
+                    const gradeResults = Object.entries(electionResults.gradeVotes[gradeKey])
+                        .sort(([,a], [,b]) => b - a);
+                    
+                    gradeResults.forEach(([candidateId, votes]) => {
+                        const candidate = participants.find(p => p.matricule === candidateId);
+                        if (candidate) {
+                            html += `<tr>
+                                <td>${candidate.prenom} ${candidate.Nom}</td>
+                                <td>${votes}</td>
+                            </tr>`;
+                        }
+                    });
+                    
+                    html += '</tbody></table>';
+                }
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Sélection des délégués
+        function selectDelegates() {
+            if (!electionResults) {
+                alert('Veuillez d\'abord dépouiller les votes avant de sélectionner les délégués.');
+                return;
+            }
+            
+            const delegatesCounts = {
+                inspecteur: parseInt(document.getElementById('inspecteurDelegates').value),
+                controleur_sous_officier: parseInt(document.getElementById('controleurDelegates').value),
+                agent_constatation_brevete: parseInt(document.getElementById('agentDelegates').value),
+                prepose: parseInt(document.getElementById('preposeDelegates').value),
+                retraite: parseInt(document.getElementById('retraiteDelegates').value)
+            };
+            
+            finalDelegates = {
+                inspecteur: [],
+                controleur_sous_officier: [],
+                agent_constatation_brevete: [],
+                prepose: [],
+                retraite: []
+            };
+            
+            // Sélectionner les délégués pour chaque grade
+            Object.entries(delegatesCounts).forEach(([grade, count]) => {
+                if (electionResults.gradeVotes[grade]) {
+                    const gradeResults = Object.entries(electionResults.gradeVotes[grade])
+                        .sort(([,a], [,b]) => b - a)
+                        .slice(0, count);
+                    
+                    gradeResults.forEach(([candidateId, votes]) => {
+                        const candidate = participants.find(p => p.matricule === candidateId);
+                        if (candidate) {
+                            finalDelegates[grade].push({
+                                ...candidate,
+                                votes: votes,
+                                grade: grade
+                            });
+                        }
+                    });
+                }
+            });
+            
+            setItem('electionFinalDelegates', finalDelegates);
+            
+            alert('Délégués sélectionnés avec succès ! Cliquez sur "Voir la liste des délégués" pour consulter la liste.');
+            updateStats();
+        }
+        
+        function viewDelegates() {
+            const container = document.getElementById('delegatesListContainer');
+            container.classList.remove('hidden');
+            
+            let html = '<h3>Liste des Délégués Élus</h3>';
+            
+            Object.entries(GRADE_MAPPING).forEach(([gradeKey, gradeName]) => {
+                if (finalDelegates[gradeKey] && finalDelegates[gradeKey].length > 0) {
+                    html += `<div class="delegate-category">
+                        <h4>${gradeName} (${finalDelegates[gradeKey].length} délégués)</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Rang</th>
+                                    <th>Prénom</th>
+                                    <th>Nom</th>
+                                    <th>Matricule</th>
+                                    <th>Votes obtenus</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                    
+                    finalDelegates[gradeKey].forEach((delegate, index) => {
+                        html += `<tr>
+                            <td>${index + 1}</td>
+                            <td>${delegate.prenom}</td>
+                            <td>${delegate.Nom}</td>
+                            <td>${delegate.matricule}</td>
+                            <td>${delegate.votes}</td>
+                        </tr>`;
+                    });
+                    
+                    html += '</tbody></table></div>';
+                } else {
+                    html += `<div class="delegate-category">
+                        <h4>${gradeName}</h4>
+                        <p><em>Aucun délégué sélectionné pour cette catégorie</em></p>
+                    </div>`;
+                }
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Actions administratives
+        function viewCandidates() {
+            const container = document.getElementById('candidatesContainer');
+            container.classList.remove('hidden');
+            
+            const candidates = participants.filter(p => p.Candidat === 'Oui' || p.isCandidat === true);
+            displayCandidatesPage(candidates, 1);
+        }
+        
+        function displayCandidatesPage(candidates, page) {
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageCandidates = candidates.slice(startIndex, endIndex);
+            
+            let html = `<h3>Liste des Candidats (${candidates.length} total)</h3>`;
+            html += '<table><thead><tr><th>Grade</th><th>Prénom</th><th>Nom</th><th>Matricule</th><th>Téléphone</th><th>Date inscription</th></tr></thead><tbody>';
+            
+            pageCandidates.forEach(candidate => {
+                html += `<tr>
+                    <td>${candidate.Grade}</td>
+                    <td>${candidate.prenom}</td>
+                    <td>${candidate.Nom}</td>
+                    <td>${candidate.matricule}</td>
+                    <td>${candidate.numero}</td>
+                    <td>${formatDate(candidate.Timestamp)}</td>
+                </tr>`;
+            });
+            
+            html += '</tbody></table>';
+            
+            document.getElementById('candidatesContent').innerHTML = html;
+            
+            // Pagination pour les candidats
+            const paginationContainer = document.getElementById('candidatesPagination');
+            const totalPages = Math.ceil(candidates.length / itemsPerPage);
+            
+            paginationContainer.innerHTML = '';
+            
+            if (totalPages > 1) {
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageBtn = document.createElement('button');
+                    pageBtn.textContent = i;
+                    if (i === page) pageBtn.classList.add('active');
+                    pageBtn.onclick = () => displayCandidatesPage(candidates, i);
+                    paginationContainer.appendChild(pageBtn);
+                }
+            }
+        }
+        
+        function viewHistory() {
+            const container = document.getElementById('historyContainer');
+            container.classList.remove('hidden');
+            
+            let html = '<h3>Historique des Élections</h3>';
+            html += '<div class="alert alert-info">Fonctionnalité en cours de développement. Ici seront affichés les historiques des élections précédentes.</div>';
+            
+            container.innerHTML = html;
+        }
+        
+        function saveElectionCandidates() {
+            const candidates = participants.filter(p => p.Candidat === 'Oui' || p.isCandidat === true);
+            setItem('electionCandidates', candidates);
+            alert(`${candidates.length} candidats enregistrés avec succès !`);
+        }
+        
+        function resetSystem() {
+            if (confirm('ATTENTION : Cette action va supprimer toutes les données (participants, votes, résultats). Êtes-vous sûr ?')) {
+                if (confirm('Cette action est irréversible. Confirmez-vous la réinitialisation complète du système ?')) {
+                    // Réinitialiser toutes les données
+                    participants = [];
+                    tempVoters = [];
+                    votes = {};
+                    electionResults = null;
+                    finalDelegates = {
+                        inspecteur: [],
+                        controleur_sous_officier: [],
+                        agent_constatation_brevete: [],
+                        prepose: [],
+                        retraite: []
+                    };
+                    
+                    // Vider le stockage en mémoire
+                    inMemoryData = {
+                        electionParticipants: [],
+                        tempVoters: [],
+                        electionVotes: {},
+                        electionResults: null,
+                        electionFinalDelegates: {
+                            inspecteur: [],
+                            controleur_sous_officier: [],
+                            agent_constatation_brevete: [],
+                            prepose: [],
+                            retraite: []
+                        },
+                        electionDates: {}
+                    };
+                    
+                    // Réinitialiser l'affichage
+                    displayParticipants();
+                    displayTempVoters();
+                    updateStats();
+                    
+                    // Masquer les conteneurs de résultats
+                    document.getElementById('resultsContainer').classList.add('hidden');
+                    document.getElementById('delegatesListContainer').classList.add('hidden');
+                    document.getElementById('candidatesContainer').classList.add('hidden');
+                    document.getElementById('historyContainer').classList.add('hidden');
+                    
+                    alert('Système réinitialisé avec succès !');
+                }
+            }
+        }
+        
+        // Fonctions utilitaires
+        function getGradeKey(gradeName) {
+            for (const [key, name] of Object.entries(GRADE_MAPPING)) {
+                if (name === gradeName || key === gradeName) {
+                    return key;
+                }
+            }
+            return 'prepose'; // Par défaut
+        }
+    </script>
+</body>
+</html>
